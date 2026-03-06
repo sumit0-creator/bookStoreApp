@@ -1,7 +1,8 @@
-  import React from "react";
+   import React from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-  
+import axios from "axios";
+import toast from "react-hot-toast";
 function Login() {
   const {
     register,
@@ -36,7 +37,7 @@ function Login() {
       });
   };
   return (
-    <div>
+    <div className=" dark:bg-slate-900 dark:text-white ">
       <dialog id="my_modal_3" className="modal">
         <div className="modal-box">
           <form onSubmit={handleSubmit(onSubmit)} method="dialog">
@@ -57,7 +58,7 @@ function Login() {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="w-80 px-3 py-1 border rounded-md outline-none"
+                className="w-full sm:w-80 px-3 py-1 border rounded-md outline-none"
                 {...register("email", { required: true })}
               />
               <br />
@@ -74,7 +75,7 @@ function Login() {
               <input
                 type="password"
                 placeholder="Enter your password"
-                className="w-80 px-3 py-1 border rounded-md outline-none"
+                className="w-full sm:w-80 px-3 py-1 border rounded-md outline-none"
                 {...register("password", { required: true })}
               />
               <br />
@@ -86,7 +87,7 @@ function Login() {
             </div>
 
             {/* Button */}
-            <div className="flex justify-around mt-6">
+            <div className="flex flex-col sm:flex-row justify-around gap-3 mt-6">
               <button className="bg-pink-500 text-white rounded-md px-3 py-1 hover:bg-pink-700 duration-200">
                 Login
               </button>

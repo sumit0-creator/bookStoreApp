@@ -1,13 +1,28 @@
-import React from 'react';
+ import React, { useEffect, useState } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import list from '../../public/list.json';
+ import axios from "axios";
 import Cards from './Cards';
+ 
 
 
 function Freebook() {
-  const filterdata= list.filter((data)=>data.category==="free");
+   
+    const [book, setBook] = useState([]);
+  useEffect(() => {
+    const getBook = async () => {
+      try {
+        const res = await axios.get("http://localhost:4001/book");
+        console.log(res.data);
+        const data = res.data.filter((data)=>data.category==="free")
+        setBook(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getBook();
+  }, []);
   
   
    var settings = {
@@ -45,17 +60,17 @@ function Freebook() {
     ],
   };
   return <>
-    <div className=" max-w-screen-2xl container mx-auto md:px-20 px-4">
+    <div className="max-w-screen-2xl container mx-auto md:px-20 px-4">
       <div> 
-      <h1 className="font-semibold text-xl pb-4 "> Free Offered Courses </h1>
-        <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+      <h1 className="font-semibold text-lg sm:text-xl md:text-2xl pb-4">Free Offered Courses</h1>
+        <p className="text-xs sm:text-sm md:text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
             Accusantium veritatis alias pariatur ad dolor repudiandae eligendi
             corporis nulla non suscipit, iure neque earum?</p>
     </div>
     <div className="slider-container"> 
          
          <Slider {...settings}>
-            {filterdata.map((item) => (
+            {book.map((item) => (
               <Cards item={item} key={item.id} />
             ))}
           </Slider>
